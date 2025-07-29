@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import VMDetails from "./pages/VmDetails/VmDetails";
 import TerminalComponent from "./pages/Terminal/Terminal";
+import CodeEditor from "./pages/CodeEditor/CodeEditor";
+import CodeExecutor from "./pages/CodeExecutor/CodeExecutor";
 
 const App = () => {
   const [selectedVM, setSelectedVM] = useState(null);
+  const [activeTab, setActiveTab] = useState("vm-manager");
 
   const vmList = [
     {
@@ -24,15 +27,14 @@ const App = () => {
     },
   ];
 
-  const handleViewTerminal = (vm) => {
-    setSelectedVM(vm);
-  };
-
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">VM Manager</h1>
       <VMDetails vmList={vmList} onViewTerminal={setSelectedVM} />
-      {selectedVM && <TerminalComponent vm={selectedVM} />}
+      <div className="flex items-center gap-4">
+        <CodeEditor />
+        {selectedVM && <TerminalComponent vm={selectedVM} />}
+      </div>
     </div>
   );
 };

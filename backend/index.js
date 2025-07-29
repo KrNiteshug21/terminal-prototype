@@ -4,6 +4,9 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const { Client } = require("ssh2");
+const { spawn } = require("child_process");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
@@ -53,6 +56,10 @@ io.on("connection", (socket) => {
           });
         });
       })
+      .on("execute-code", ({ code, language }) => {
+        console.log(`Executing code in ${language}:`);
+        console.log(code);
+      })
       .on("error", (err) => {
         console.error("SSH connection error:", err);
         socket.emit("output", `SSH error: ${err.message}`);
@@ -63,6 +70,11 @@ io.on("connection", (socket) => {
         username: vm.username,
         password: vm.password,
       });
+  });
+
+  socket.on("execute-code", ({ code, language }) => {
+    console.log(`Executing code in ${language}:`);
+    console.log(code);
   });
 });
 
