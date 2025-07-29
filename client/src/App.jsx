@@ -12,7 +12,7 @@ const App = () => {
     {
       id: 1,
       name: "Ubuntu-server",
-      ip: "10.252.7.239",
+      ip: "10.252.7.234",
       port: 22,
       username: "user",
       password: "cdac123",
